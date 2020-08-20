@@ -5,6 +5,7 @@ import random
 from flask import Flask, render_template, redirect, url_for, request
 from flask_uploads import UploadSet, configure_uploads, IMAGES, \
     patch_request_class
+from flask_sqlalchemy import SQLAlchemy
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileRequired, FileAllowed
 from wtforms import SubmitField
@@ -15,10 +16,11 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 app = Flask(__name__)
 app.config['SECRET_KEY'] = '\xe2\xaez\xe9-vH\xea\xa2V\x04\xc5\xed\xde'
 app.config['UPLOADED_PHOTOS_DEST'] = os.path.join(basedir, 'uploads')
-
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
 photos = UploadSet('photos', IMAGES)
 configure_uploads(app, photos)
 patch_request_class(app)
+db = SQLAlchemy(app)
 
 
 class UploadForm(FlaskForm):
@@ -28,14 +30,14 @@ class UploadForm(FlaskForm):
     submit = SubmitField('Upload')
 
 
-class File:
+class Mapping(db.Model):
 
-    def __init__(self, name1, name2):
-        self.original = name1
-        self.thumbnail = name2
+    id = db.Column(db.Integer, primary_key=True)
+    original = db.Column(db.String(20), nullable=False)
+    thumbnail = db.Column(db.String(20), nullable=False)
 
-
-files_list = []
+    def __repr__(self):
+        return 'Mapping({}, {})'.format(self.original, self.thumbnail)
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -51,7 +53,9 @@ def upload_file():
             name2 = hashlib.md5(str_name2.encode('utf-8'
                                 )).hexdigest()[:15]
             resize(name, name2)
-            files_list.append(File(name, name2))
+            mapp = Mapping(original=name, thumbnail=name2)
+            db.session.add(mapp)
+            db.session.commit()
         success = True
     else:
         success = False
@@ -60,6 +64,7 @@ def upload_file():
 
 @app.route('/manage')
 def manage_file():
+    files_list = Mapping.query.all()
     return render_template('manage.html', files_list=files_list,
                            photos=photos)
 
