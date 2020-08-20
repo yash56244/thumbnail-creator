@@ -1,0 +1,14 @@
+
+<!DOCTYPE html>
+<title>File Manager</title>
+<center>
+<h1>File Manager</h1>
+<link rel="stylesheet" href="../static/style.css">
+<a href="{{ url_for('upload_file') }}">Upload</a>
+<a href="{{ url_for('manage_file') }}">Manage</a>
+<hr>
+{% for photo in files_list %}
+    <img src="../static/{{ photo.thumbnail }}.jpg" alt="">
+    <a href="{{ url_for('open_file', filename=photo.original) }}" class="open">Open</a>
+{% endfor %}
+</center>

@@ -1,0 +1,10 @@
+<!DOCTYPE html>
+<title>File Browser</title>
+<link rel="stylesheet" href="../static/style.css">
+<center>
+<h1>File Browser</h1>
+<a href="{{ url_for('upload_file') }}">Upload</a>
+<a href="{{ url_for('manage_file') }}">Manage</a>
+<hr>
+<img src="{{ file_url }}">
+</center>
