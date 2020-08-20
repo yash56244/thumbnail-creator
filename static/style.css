@@ -1,34 +1,36 @@
-a, .submit{
-    padding: 10px 15px;
-    border: none;
-    outline: none;
-    border-radius: 5px;
-    background-color: aliceblue;
-    font-size: large;
-    transition: 0.2s;
-    cursor: pointer;
-  }
-  a:hover, .submit:hover {
+a,
+.submit {
+	padding: 10px 15px;
+	border: none;
+	outline: none;
+	border-radius: 5px;
+	background-color: aliceblue;
+	font-size: large;
+	transition: 0.2s;
+	cursor: pointer;
+}
+a:hover,
+.submit:hover {
 	color: white;
 	background-color: #26a69a;
 }
-form{
-  padding: 10px 20px;
+form {
+	padding: 10px 20px;
 }
-h1{
-  font-size: 40px;
-  color: blanchedalmond;
+h1 {
+	font-size: 40px;
+	color: blanchedalmond;
 }
-body{
-  background-color: aqua;
+body {
+	background-color: aqua;
 }
-a{
-  text-decoration: none;
+a {
+	text-decoration: none;
 }
-a:visited{
-  text-decoration: none;
+a:visited {
+	text-decoration: none;
 }
-.open{
-  position: relative;
-  left: -9%;
+.open {
+	position: relative;
+	left: -9%;
 }
